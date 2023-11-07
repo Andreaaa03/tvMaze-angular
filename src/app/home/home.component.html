@@ -1,0 +1,18 @@
+<p>home works!</p>
+<input #nome value="" type="text" (input)="FunctionSearchByName(nome.value)">
+
+<div class="container">
+    <div class="row">
+        <div class="col col-12 d-flex" *ngFor="let movie of AllTV">
+            
+            <div class="col col-2">
+                <img class="img-fluid" [src]="movie.show.image.medium" alt="immagine">
+            </div>
+            <div class="col col-10">
+                <h2>{{movie.show.name}}</h2>
+                <p *ngIf="movie.show.rating.average">{{movie.show.rating.average}}</p>
+            </div>
+                
+        </div>
+    </div>
+</div>
