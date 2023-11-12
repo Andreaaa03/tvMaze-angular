@@ -1,27 +1,46 @@
-<app-menu></app-menu>
-
-<ul class="nav nav-tabs ">
-    <li class="nav-item">
-        <button class="nav-link active" [ngClass]="{ active: menuScelto === sceltaMenu.main }" (click)="selectMenu(sceltaMenu.main)" id="tab-main" data-bs-target="#tab-main" role="tab" aria-current="page" href="#">Main</button>
-    </li>
-    <li class="nav-item">
-        <button class="nav-link" [ngClass]="{ active: menuScelto === sceltaMenu.season }" (click)="selectMenu(sceltaMenu.season)" id="tab-season" data-bs-target="#tab-season" role="tab" href="#">Episode</button>
-    </li>
-</ul>
-<div class="tab-content">
-    <div class="tab-pane fade show active" [ngClass]="{ active: menuScelto === sceltaMenu.main }" role="tabpanel" id="tab-main">
-        <p *ngIf="singleTV?.name">{{singleTV.name}}</p>
-    </div>
-    <div class="tab-pane fade show" [ngClass]="{ active: menuScelto === sceltaMenu.season }" role="tabpanel" id="tab-season">
-        <div class="" *ngFor="let row of Stagione.bigArray, let i = index">
-            <h2>season {{i+1}}</h2>
-            <div class="" *ngFor="let col of row">
-                {{col.name}}
+<div class="container">
+    <app-menu></app-menu>
+    
+    <ul class="nav nav-tabs ">
+        <li class="nav-item">
+            <button class="nav-link active" [ngClass]="{ active: menuScelto === sceltaMenu.main }" (click)="selectMenu(sceltaMenu.main)" id="tab-main" data-bs-target="#tab-main" role="tab" aria-current="page" href="#">Main</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" [ngClass]="{ active: menuScelto === sceltaMenu.season }" (click)="selectMenu(sceltaMenu.season)" id="tab-season" data-bs-target="#tab-season" role="tab" href="#">Episode</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" [ngClass]="{ active: menuScelto === sceltaMenu.cast }" (click)="selectMenu(sceltaMenu.cast)" id="tab-season" data-bs-target="#tab-cast" role="tab" href="#">Cast</button>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane fade show active" [ngClass]="{ active: menuScelto === sceltaMenu.main }" role="tabpanel" id="tab-main">
+            <p *ngIf="singleTV?.name">{{singleTV.name}}</p>
+        </div>
+        <div class="tab-pane fade show" [ngClass]="{ active: menuScelto === sceltaMenu.season }" role="tabpanel" id="tab-season">
+            <div class="" *ngFor="let row of Stagione.bigArray, let i = index">
+                <h2>season {{i+1}}</h2>
+                <div class="" *ngFor="let col of row">
+                    {{col.name}}
+                </div>
             </div>
-        </div>  
-        <div class="" *ngFor="let row of Stagione.specialArray, let i = index">
-            <h2>Special </h2>
-                {{row.name}}
+            <div class="" *ngFor="let row of Stagione.specialArray, let i = index">
+                <h2>Special </h2>
+                    {{row.name}}
+            </div>
+        </div>
+        <div class="tab-pane fade show active" [ngClass]="{ active: menuScelto === sceltaMenu.cast }" role="tabpanel" id="tab-cast">
+            <div class="row w-100">
+                <div class="col col-4 d-flex justify-content-center mb-4" *ngFor="let cast of casts">
+                    <div class="w-100 d-flex flex-nowrap">
+                        <img class="img-fluid" [src]="cast.person.image.medium" alt="">
+                        <div class="w-100">
+                            <p class="m-0 p-0 text-center" *ngIf="cast.person.name">{{cast.person.name}}</p>
+                            <p class="m-0 p-0 text-center" *ngIf="cast.person.name && cast.character.name">as</p>
+                            <p class="m-0 p-0 text-center" *ngIf="cast.character.name">{{cast.character.name}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

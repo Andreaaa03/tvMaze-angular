@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { map } from 'rxjs';
-import { Show, singleShow, Episode, Season } from '../models/show.type';
+import { Show, singleShow, Episode, Season, Cast } from '../models/show.type';
 
 @Injectable({
   providedIn: 'root',
@@ -32,36 +32,49 @@ export class GetApiServices {
       })
     );
   }
+  getSearchByIdCast(id: string) {
+    return this.apiService.searchByIdCast(id).pipe(
+      map((res: any) => {
+        return res as Cast[];
+      })
+    );
+  }
 
   season = 1;
   episodes = 1;
-  newArray: any = [];
-  oggetto: any = {
-    specialArray: [],
+  newArray:any = [];
+  oggetto:any = {
     bigArray: [],
+    specialArray: [],
   }
   getSearchByIdEpisode(id: string) {
     return this.apiService.searchByIdEpisodes(id).pipe(
       map((res: any) => {
+        console.log(res);
+        this.newArray = [];
+        this.oggetto.bigArray = [];
+        this.oggetto.specialArray = [];
         res.forEach((element: any) => {
-          if (element.type != "regular") {
+          if (element.type !== "regular") {
             this.oggetto.specialArray.push(element);
           } else {
+            if (element.episodes != this.episodes) {
+              this.episodes += 1;
+              this.newArray.push(element);
+            }
+
             if (element.season != this.season) {
               this.season += 1;
               this.oggetto.bigArray.push(this.newArray);
               this.newArray = [];
               this.episodes = 1;
             }
-
-            if (element.episodes != this.episodes) {
-              this.episodes += 1;
-              this.newArray.push(element);
-            }
-
+            
           }
         })
-        return this.oggetto;
+        if(this.season==1)
+          this.oggetto.bigArray.push(this.newArray);
+        return this.oggetto as Season;
       })
     );
   }
@@ -69,7 +82,7 @@ export class GetApiServices {
   // trovaNull(ogg: {}) {
   //   for (let chiave in ogg) {
   //     if ((ogg as any)[chiave] === null) {
-  //       (ogg as any)[chiave] = 'aaaaaaaaaaaaaaaaaaaaa';
+  //       (ogg as any)[chiave] = '';
   //     } else if (typeof (ogg as any)[chiave] === 'object') {
   //       (ogg as any)[chiave] = this.trovaNull((ogg as any)[chiave]);
   //     } 

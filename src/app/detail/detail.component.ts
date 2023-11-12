@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { GetApiServices } from '../services/getApi.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Show, singleShow } from '../models/show.type';
+import { Show, singleShow, Cast } from '../models/show.type';
 import { MenuComponent } from '../menu/menu.component';
 import { SearchService } from '../services/barra-ricerca.service';
 
@@ -21,6 +21,7 @@ export class DetailComponent {
     bigArray : [],
     specialArray : [],
   }
+  casts!: Cast[];
 
   constructor(
     private getApiServices: GetApiServices,
@@ -31,6 +32,7 @@ export class DetailComponent {
     this.searchById = this.activatedRoute.snapshot.paramMap.get('id');
     this.FunctionSearchById();
     this.FunctionSearchByIdEpisode();
+    this.FunctionSearchByIdCast();
 
 
     this.searchService.currentSearchQuery.subscribe(query => {
@@ -39,6 +41,7 @@ export class DetailComponent {
       this.searchResults = this.FunctionSearchByName();
     });
   }
+  // ripeti!!!
 
   FunctionSearchByName() {
     if (this.searchByName != null) {
@@ -63,6 +66,15 @@ export class DetailComponent {
       });
     }
   }
+  FunctionSearchByIdCast(): void {
+    if (this.searchById != null) {
+      this.getApiServices.getSearchByIdCast(this.searchById).subscribe((res) => {
+        if (res) {
+          this.casts = res;
+        }
+      });
+    }
+  }
 
   FunctionSearchByIdEpisode():void{
     if (this.searchById != null) {
@@ -70,7 +82,6 @@ export class DetailComponent {
         if (res) {
           console.log(res);
           this.Stagione = res;
-          console.log(this.Stagione);
         }
       });
     }
@@ -80,6 +91,7 @@ export class DetailComponent {
   sceltaMenu = {
     main: 'main',
     season: 'season',
+    cast: 'cast',
   };
   selectMenu(scelta: string) {
     switch (scelta) {
@@ -88,6 +100,9 @@ export class DetailComponent {
         break;
       case this.sceltaMenu.season:
         this.menuScelto = this.sceltaMenu.season;
+        break;
+      case this.sceltaMenu.cast:
+        this.menuScelto = this.sceltaMenu.cast;
         break;
     }
   }

@@ -20,5 +20,9 @@ export class ApiService {
   searchByIdEpisodes(id: string) {
     return this.http.get(this.baseUrl + "shows/" + id + '/episodes?specials=1');
   }
+
+  searchByIdCast(id: string) {
+    return this.http.get(this.baseUrl + "shows/" + id + '/cast');
+  }
   
 }
