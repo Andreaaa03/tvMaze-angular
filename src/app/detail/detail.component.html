@@ -2,10 +2,10 @@
 
 <ul class="nav nav-tabs ">
     <li class="nav-item">
-        <button class="nav-link active" [ngClass]="{ active: menuScelto === sceltaMenu.main }" (click)="selectMenu(sceltaMenu.main)" id="tab-main" data-bs-target="#tab-main" role="tab" aria-current="page" href="#">Active</button>
+        <button class="nav-link active" [ngClass]="{ active: menuScelto === sceltaMenu.main }" (click)="selectMenu(sceltaMenu.main)" id="tab-main" data-bs-target="#tab-main" role="tab" aria-current="page" href="#">Main</button>
     </li>
     <li class="nav-item">
-        <button class="nav-link" [ngClass]="{ active: menuScelto === sceltaMenu.season }" (click)="selectMenu(sceltaMenu.season)" id="tab-season" data-bs-target="#tab-season" role="tab" href="#">Link</button>
+        <button class="nav-link" [ngClass]="{ active: menuScelto === sceltaMenu.season }" (click)="selectMenu(sceltaMenu.season)" id="tab-season" data-bs-target="#tab-season" role="tab" href="#">Episode</button>
     </li>
 </ul>
 <div class="tab-content">
@@ -13,6 +13,15 @@
         <p *ngIf="singleTV?.name">{{singleTV.name}}</p>
     </div>
     <div class="tab-pane fade show" [ngClass]="{ active: menuScelto === sceltaMenu.season }" role="tabpanel" id="tab-season">
-        <p>ciaoooo</p>
+        <div class="" *ngFor="let row of Stagione.bigArray, let i = index">
+            <h2>season {{i+1}}</h2>
+            <div class="" *ngFor="let col of row">
+                {{col.name}}
+            </div>
+        </div>  
+        <div class="" *ngFor="let row of Stagione.specialArray, let i = index">
+            <h2>Special </h2>
+                {{row.name}}
+        </div>
     </div>
 </div>

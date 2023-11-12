@@ -16,6 +16,9 @@ export class ApiService {
   searchById(id: string) {
     return this.http.get(this.baseUrl + 'shows/' + id);
   }
-
+  
+  searchByIdEpisodes(id: string) {
+    return this.http.get(this.baseUrl + "shows/" + id + '/episodes?specials=1');
+  }
   
 }

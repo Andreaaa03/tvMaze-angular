@@ -17,6 +17,10 @@ export class DetailComponent {
   searchByName: string | null = '';
   searchResults: any = "";
   allTV!: Show[];
+  Stagione:any = {
+    bigArray : [],
+    specialArray : [],
+  }
 
   constructor(
     private getApiServices: GetApiServices,
@@ -26,6 +30,8 @@ export class DetailComponent {
   ngOnInit() {
     this.searchById = this.activatedRoute.snapshot.paramMap.get('id');
     this.FunctionSearchById();
+    this.FunctionSearchByIdEpisode();
+
 
     this.searchService.currentSearchQuery.subscribe(query => {
       // Esegui la ricerca o aggiorna la vista in base alla query
@@ -52,15 +58,25 @@ export class DetailComponent {
     if (this.searchById != null) {
       this.getApiServices.getSearchById(this.searchById).subscribe((res) => {
         if (res) {
-          console.log(res);
           this.singleTV = res;
-          console.log(this.singleTV);
         }
       });
     }
   }
 
-  menuScelto: string = '';
+  FunctionSearchByIdEpisode():void{
+    if (this.searchById != null) {
+      this.getApiServices.getSearchByIdEpisode(this.searchById).subscribe((res) => {
+        if (res) {
+          console.log(res);
+          this.Stagione = res;
+          console.log(this.Stagione);
+        }
+      });
+    }
+  }
+
+  menuScelto: string = 'main';
   sceltaMenu = {
     main: 'main',
     season: 'season',
