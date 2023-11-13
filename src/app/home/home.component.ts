@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GetApiServices } from '../services/getApi.service';
 import { Show } from '../models/show.type';
-import { MenuComponent } from '../menu/menu.component';
 import { SearchService } from '../services/barra-ricerca.service';
 import { Router } from '@angular/router';
 

@@ -40,40 +40,44 @@ export class GetApiServices {
     );
   }
 
-  season = 1;
-  episodes = 1;
-  newArray:any = [];
+  
   oggetto:any = {
     bigArray: [],
     specialArray: [],
   }
   getSearchByIdEpisode(id: string) {
+    let season = 1;
+    let episodes = 0;
+    let newArray:any = [];
     return this.apiService.searchByIdEpisodes(id).pipe(
       map((res: any) => {
         console.log(res);
-        this.newArray = [];
+        newArray = [];
         this.oggetto.bigArray = [];
         this.oggetto.specialArray = [];
         res.forEach((element: any) => {
           if (element.type !== "regular") {
             this.oggetto.specialArray.push(element);
           } else {
-            if (element.episodes != this.episodes) {
-              this.episodes += 1;
-              this.newArray.push(element);
+            if (element.number != episodes) {
+              episodes = element.number;
+              newArray.push(element);
             }
 
-            if (element.season != this.season) {
-              this.season += 1;
-              this.oggetto.bigArray.push(this.newArray);
-              this.newArray = [];
-              this.episodes = 1;
+            if (element.season !== season) {
+              console.log(element.season, season);
+              debugger;
+              season = element.season;
+              this.oggetto.bigArray.push(newArray);
+              newArray = [];
+              episodes = 0;
             }
             
           }
         })
-        if(this.season==1)
-          this.oggetto.bigArray.push(this.newArray);
+        if(season===1){
+          this.oggetto.bigArray.push(newArray);
+        }
         return this.oggetto as Season;
       })
     );
