@@ -8,13 +8,15 @@ import { DetailComponent } from './detail/detail.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MenuComponent } from './menu/menu.component';
+import { DrinkCardComponent } from './drink-card/drink-card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     DetailComponent,
-    MenuComponent
+    MenuComponent,
+    DrinkCardComponent
   ],
   imports: [
     BrowserModule,
